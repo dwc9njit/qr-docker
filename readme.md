@@ -1,72 +1,85 @@
-# Docker and Python
+Here's a revised and more descriptive README file for your QR code generator application using Docker:
 
-For this assignment you will be combining Docker with Python to create a program that generates a QR code PNG file that
-contains a URL. The QR code can be viewed with the camera on your phone to allow a user to click on it and send them to
-the target website. You must make your program generate a QR code that takes someone to your GitHub homepage i.e. https://github.com/kaw393939 <replace mine with yours>
+---
+
+# QR Code Generator Application with Docker
+
+This project is a Python application that generates a QR code PNG file containing a URL. The QR code can be scanned with a mobile device to navigate to the target website. This project uses Docker to ensure a consistent runtime environment.
+
+## Features
+
+- Generates a QR code that links to a specified URL
+- Customizable QR code colors and output directory
+- Dockerized for easy deployment and isolation
+- Logs generation and error handling
 
 ## Setup
-1.  Goto Docker.com and Install docker - [https://www.docker.com/get-started/](here)
-2.  Signup for your own Docker account 
 
-## Submission Requirements:
+1. **Install Docker**:
+   - Visit [Docker's official website](https://www.docker.com/get-started/) and follow the instructions to download and install Docker on your machine.
 
-1. Add the QR code image that links to your own GitHub homepage that you generate to the readme.md file, so that it appears below.
+2. **Sign up for Docker**:
+   - Create a Docker account if you don't already have one.
 
-PUT YOUR QR CODE IMAGE
+## QR Code Generation Example
 
-2.  Add an image of viewing the log of successfully creating the QR code below.
- PUT YOUR LOG IMAGE HERE
-## Lesson Video
+This application generates a QR code that links to your GitHub homepage. For example, you can generate a QR code that points to `https://github.com/your-username`.
 
-1.  [Scaling and Backend Software Engineering](https://youtu.be/v3LxCmYQVS4)
-3.  [Docker and Cloud Computing Intro](https://youtu.be/FpeGzRkBycw)
+### Sample QR Code Image
+![Sample QR Code](./qr_codes/sample_qr_code.png)
 
+### Sample Log Image
+![Sample Log](./logs/sample_log.png)
 
-## Readings / Tutorials - No, really you should read these
-* [Containerization vs. Virtualization](https://www.liquidweb.com/kb/virtualization-vs-containerization/)
-* [Official docker Getting Started - Go over all the sections](https://docs.docker.com/guides/get-started/)
-* [Entrypoint vs. CMD vs. RUN ](https://codewithyury.com/docker-run-vs-cmd-vs-entrypoint/)
-* [Make QR with Python](https://towardsdatascience.com/generate-qrcode-with-python-in-5-lines-42eda283f325)
-* [Make Dockerfile](https://thenewstack.io/docker-basics-how-to-use-dockerfiles/)
-* [Args and Environment Variables in Docker](https://vsupalov.com/docker-arg-env-variable-guide/)
+## Building the Docker Image
 
-### Building the Image
+To build the Docker image for this application, run the following command in the root directory of the project:
 
 ```sh
 docker build -t my-qr-app .
 ```
-This command builds a Docker image named `my-qr-app` from the Dockerfile in the current directory (`.`).
 
-### Running the Container with Default Settings
+This command builds a Docker image named `my-qr-app` using the Dockerfile in the current directory.
+
+## Running the Docker Container
+
+### Default Settings
+
+To run the container with default settings:
+
 ```sh
 docker run -d --name qr-generator my-qr-app
 ```
 
-Runs your QR code generator application in detached mode (`-d`) with a container named `qr-generator`.
+This runs your QR code generator application in detached mode (`-d`) with a container named `qr-generator`.
 
-### Setting Environment Variables for QR Code Customization
+### Custom Settings with Environment Variables
+
+To customize the QR code generation settings, you can set environment variables:
 
 ```sh
 docker run -d --name qr-generator \
-  -e QR_DATA_URL='https://example.com' \
+  -e QR_DATA_URL='https://your-url.com' \
   -e QR_CODE_DIR='qr_codes' \
-  -e QR_CODE_FILENAME='exampleQR.png' \
+  -e QR_CODE_FILENAME='customQR.png' \
   -e FILL_COLOR='blue' \
   -e BACK_COLOR='yellow' \
   my-qr-app
 ```
-Customizes the QR code generation settings through environment variables.
 
 ### Sharing a Volume for QR Code Output
 
+To mount a host directory to the container for storing QR codes:
+
 ```sh
 docker run -d --name qr-generator \
   -v /host/path/for/qr_codes:/app/qr_codes \
   my-qr-app
 ```
-Mounts a host directory to the container for storing QR codes.
 
-### Combining Volume Sharing and Environment Variables
+### Combined Volume Sharing and Environment Variables
+
+A comprehensive command that configures the QR code settings and mounts volumes for QR codes:
 
 ```sh
 docker run -d --name qr-generator \
@@ -77,16 +90,19 @@ docker run -d --name qr-generator \
   my-qr-app
 ```
 
-A comprehensive command that configures the QR code settings and mounts volumes for QR codes.
+## Setting the URL from the Terminal
 
-## Setting the arg for the url from the terminal
+To set the URL for the QR code from the terminal:
+
 ```sh
-docker run -v .:/app qrcode --url htt/www.nobdoy.com
+docker run -v .:/app my-qr-app --url https://www.your-url.com
 ```
-This is how you would set the url for the qr code
-### Basic Docker Commands Explained
 
-**Building an Image**
+This command overrides the default URL with the specified URL for QR code generation.
+
+## Basic Docker Commands Explained
+
+### Building an Image
 
 ```sh
 docker build -t image_name .
@@ -94,45 +110,49 @@ docker build -t image_name .
 
 Builds a Docker image with the tag `image_name` from the Dockerfile in the current directory.
 
-**Running a Container**
+### Running a Container
 
 ```sh
 docker run --name container_name image_name
 ```
-Runs a container named `container_name` from `image_name` in the foreground / attached mode
+
+Runs a container named `container_name` from `image_name` in the foreground.
 
 ```sh
 docker run -d --name container_name image_name
 ```
-Runs a container named `container_name` from `image_name` in detached mode
 
-**Listing Running Containers**
+Runs a container named `container_name` from `image_name` in detached mode.
+
+### Listing Running Containers
 
 ```sh
 docker ps
 ```
+
 Shows a list of all running containers.
 
-**Stopping a Container**
+### Stopping a Container
 
 ```sh
 docker stop container_name
 ```
-**Removing a Container**
+
+### Removing a Container
 
 ```sh
 docker rm container_name
 ```
-**Listing Docker Images**
 
+### Listing Docker Images
 
 ```sh
 docker images
 ```
+
 Lists all Docker images available on your machine.
 
-**Removing a Docker Image**
-
+### Removing a Docker Image
 
 ```sh
 docker rmi image_name
@@ -140,11 +160,14 @@ docker rmi image_name
 
 Removes a Docker image.
 
-**Viewing Logs of a Container**
+### Viewing Logs of a Container
 
 ```sh
 docker logs container_name
 ```
+
 Displays the logs from a running or stopped container.
+
+---
 
 These commands cover the essentials of building, running, and managing Docker containers and images, along with specific examples for your QR code generation application.
