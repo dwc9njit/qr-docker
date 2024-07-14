@@ -1,4 +1,3 @@
-Here's a revised and more descriptive README file for your QR code generator application using Docker:
 
 ---
 
