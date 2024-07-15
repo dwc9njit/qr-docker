@@ -25,7 +25,9 @@ This project is a Python application that generates a QR code PNG file containin
 This application generates a QR code that links to your GitHub homepage. For example, you can generate a QR code that points to `https://github.com/dwc9njit`.
 
 ### My QR Code Image
-![QR Code](images/QRCode_20240714230750.png)
+
+![QR Code](./images/QRCode_20240714230750.png)
+
 
 ## Building the Docker Image
 
